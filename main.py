@@ -1,4 +1,5 @@
 import supervision as sv
+import time
 from enum import Enum
 from rfdetr import RFDETRNano, RFDETRSmall, RFDETRMedium, RFDETRLarge
 #from rfdetr import RFDETRSegNano, RFDETRSegSmall, RFDETRSegMedium, RFDETRSegLarge
@@ -14,6 +15,7 @@ class MODEL_SIZE(Enum):
 
 
 def infer(model_size=MODEL_SIZE.MEDIUM):
+    start = time.time()
     match model_size:
         case MODEL_SIZE.NANO:
             model = RFDETRNano()
@@ -30,6 +32,7 @@ def infer(model_size=MODEL_SIZE.MEDIUM):
 
     annotated_image = sv.BoxAnnotator().annotate(detections.metadata["source_image"], detections)
     annotated_image = sv.LabelAnnotator().annotate(annotated_image, detections, labels)
+    print(f"Elapsed Time: {time.time() - start} [sec]")
 
 
 if __name__ == '__main__':
