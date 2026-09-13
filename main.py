@@ -32,6 +32,7 @@ def infer(model_size=MODEL_SIZE.MEDIUM):
 
     annotated_image = sv.BoxAnnotator().annotate(detections.metadata["source_image"], detections)
     annotated_image = sv.LabelAnnotator().annotate(annotated_image, detections, labels)
+    sv.plot_image(annotated_image)
     print(f"Elapsed Time: {time.time() - start} [sec]")
 
 
